@@ -1,9 +1,10 @@
 ## 📦 PyPI
 - For documentation refer to
 
-https://metabolomics_tools.readthedocs.io/en/latest/metabolomics_tools.html
+https://metabolomics-tools.readthedocs.io/en/latest/metabolomics_tools.html
 
 You can install this package via pip:
+https://pypi.org/project/metabolomics-tools/
 
 ```
 pip install metabolomics_tools
