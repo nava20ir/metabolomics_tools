@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>metabolomics_tools package &#8212; metabolomics_tools 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="metabolomics-tools-package">
+<h1>metabolomics_tools package<a class="headerlink" href="#metabolomics-tools-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-metabolomics_tools.core">
+<span id="metabolomics-tools-core-module"></span><h2>metabolomics_tools.core module<a class="headerlink" href="#module-metabolomics_tools.core" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.cal_mono_mass">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">cal_mono_mass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formulas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotopes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metabolomics_tools.core.cal_mono_mass" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the monoisotopic mass of one or more chemical formulas.</p>
+<p>This function parses chemical formulas, counts atoms, and calculates the
+monoisotopic mass for each formula. Optionally, custom isotopes can be
+provided, and the calculation can include an overall charge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>formulas</strong><span class="classifier">list of str</span></dt><dd><p>List of chemical formulas as strings (e.g., [“H2O”, “CO2”]).</p>
+</dd>
+<dt><strong>isotopes</strong><span class="classifier">dict, optional</span></dt><dd><p>Dictionary of custom isotope masses, where keys are element or isotope
+labels (e.g., {“Oeighteen”: 17.9991604}).</p>
+</dd>
+<dt><strong>charge</strong><span class="classifier">int, default=0</span></dt><dd><p>The charge of the ion. A non-zero charge will adjust the final mass by
+subtracting or adding proton mass as appropriate.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>Dictionary mapping each formula to its calculated monoisotopic mass.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cal_mono_mass</span><span class="p">([</span><span class="s2">&quot;H2O&quot;</span><span class="p">])</span>
+<span class="go">{&#39;H2O&#39;: 18.010564684}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cal_mono_mass</span><span class="p">([</span><span class="s2">&quot;H2O&quot;</span><span class="p">,</span> <span class="s2">&quot;CO2&quot;</span><span class="p">])</span>
+<span class="go">{&#39;H2O&#39;: 18.010564684, &#39;CO2&#39;: 43.98982924}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cal_mono_mass</span><span class="p">([</span><span class="s2">&quot;H2O&quot;</span><span class="p">,</span> <span class="s2">&quot;CO2&quot;</span><span class="p">,</span> <span class="s2">&quot;COOeighteen&quot;</span><span class="p">],</span> <span class="n">isotopes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Oeighteen&quot;</span><span class="p">:</span> <span class="mf">17.9991604</span><span class="p">})</span>
+<span class="go">{&#39;H2O&#39;: 18.010564684, &#39;CO2&#39;: 43.98982924, &#39;COOeighteen&#39;: 61.98899004}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.get_intensity_per_spectra">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">get_intensity_per_spectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ms2_fragments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metabolomics_tools.core.get_intensity_per_spectra" title="Link to this definition">¶</a></dt>
+<dd><p>Extract and join the intensity values from MS2 fragment peaks.</p>
+<p>This function takes a list of (m/z, intensity) tuples representing MS2 fragment peaks,
+and returns a semicolon-separated string of intensities for a single compound/spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ms2_fragments</strong><span class="classifier">list of tuple</span></dt><dd><p>A list where each element is a tuple (m/z, intensity), typically
+parsed from MS/MS data for one compound.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>A semicolon-separated string of intensity values (e.g., “200.0;150.0;80.5”).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_intensity_per_spectra</span><span class="p">([(</span><span class="mf">100.1</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">101.2</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">)])</span>
+<span class="go">&#39;200.0;150.0&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.get_mz_per_spectra">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">get_mz_per_spectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ms2_fragments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metabolomics_tools.core.get_mz_per_spectra" title="Link to this definition">¶</a></dt>
+<dd><p>Extract and join the m/z values from MS2 fragment peaks.</p>
+<p>Given a list of MS2 fragment peaks as (m/z, intensity) tuples,
+this function returns a semicolon-separated string of m/z values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ms2_fragments</strong><span class="classifier">list of tuple</span></dt><dd><p>A list where each element is a tuple (m/z, intensity), typically
+extracted from parsed MS/MS data.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>A semicolon-separated string of m/z values (e.g., “100.1;101.2;150.3”).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_mz_per_spectra</span><span class="p">([(</span><span class="mf">100.1</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">101.2</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">)])</span>
+<span class="go">&#39;100.1;101.2&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.get_pubchem_cid_from_smiles">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">get_pubchem_cid_from_smiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#metabolomics_tools.core.get_pubchem_cid_from_smiles" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve the PubChem Compound ID (CID) for a given SMILES string.</p>
+<p>This function uses the PubChemPy library to query the PubChem database
+and return the CID corresponding to the input SMILES (Simplified Molecular Input Line Entry System) string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>smiles</strong><span class="classifier">str</span></dt><dd><p>A valid SMILES string representing a chemical compound.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>str or None</dt><dd><p>The PubChem Compound ID (CID) as a string if found; otherwise, returns None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function requires the <cite>pubchempy</cite> package and an active internet connection.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_pubchem_cid_from_smiles</span><span class="p">(</span><span class="s2">&quot;C1=CC=CC=C1&quot;</span><span class="p">)</span>  <span class="c1"># Benzene</span>
+<span class="go">&#39;241&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.monomass">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">monomass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotopes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_isotopes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'Al':</span> <span class="pre">26.9815,</span> <span class="pre">'As':</span> <span class="pre">74.921595,</span> <span class="pre">'Au':</span> <span class="pre">196.9666,</span> <span class="pre">'B':</span> <span class="pre">10.811,</span> <span class="pre">'Br':</span> <span class="pre">78.9183376,</span> <span class="pre">'C':</span> <span class="pre">12,</span> <span class="pre">'Ca':</span> <span class="pre">39.96259098,</span> <span class="pre">'Cl':</span> <span class="pre">34.96885271,</span> <span class="pre">'Co':</span> <span class="pre">58.9332,</span> <span class="pre">'Cr':</span> <span class="pre">51.9961,</span> <span class="pre">'D':</span> <span class="pre">2.014102,</span> <span class="pre">'F':</span> <span class="pre">18.9984032,</span> <span class="pre">'Fe':</span> <span class="pre">55.845,</span> <span class="pre">'H':</span> <span class="pre">1.0078250321,</span> <span class="pre">'I':</span> <span class="pre">126.9045,</span> <span class="pre">'K':</span> <span class="pre">39.0983,</span> <span class="pre">'Mg':</span> <span class="pre">24.3051,</span> <span class="pre">'N':</span> <span class="pre">14.0030740052,</span> <span class="pre">'Na':</span> <span class="pre">22.9898,</span> <span class="pre">'O':</span> <span class="pre">15.9949146221,</span> <span class="pre">'P':</span> <span class="pre">30.97376151,</span> <span class="pre">'S':</span> <span class="pre">31.97207069,</span> <span class="pre">'Se':</span> <span class="pre">79.91652,</span> <span class="pre">'Si':</span> <span class="pre">27.9769265327}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metabolomics_tools.core.monomass" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the monoisotopic mass of a chemical formula, with optional custom isotopes and charge adjustment.</p>
+<p>This function computes the monoisotopic mass based on an atomic composition
+dictionary. Optionally, custom isotope masses can be provided, and the
+formula mass can be adjusted for charge state (e.g., as observed in mass spectrometry).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>formula</strong><span class="classifier">dict, optional</span></dt><dd><p>A dictionary representing the atom counts in a molecular formula
+(e.g., {“H”: 2, “O”: 2} for hydrogen peroxide H₂O₂).</p>
+</dd>
+<dt><strong>isotopes</strong><span class="classifier">dict, optional</span></dt><dd><p>Dictionary of custom isotopic masses to override the default ones.
+Keys are element names or isotope labels (e.g., {“Oeighteen”: 17.9991604}).</p>
+</dd>
+<dt><strong>charge</strong><span class="classifier">int, default=0</span></dt><dd><p>The charge state of the ion. If non-zero, the mass is adjusted accordingly.
+Positive charge adds protons; negative subtracts.</p>
+</dd>
+<dt><strong>default_isotopes</strong><span class="classifier">dict, optional</span></dt><dd><p>Dictionary of default isotopic masses. Defaults to <cite>DEFAULT_ISOTOPES</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>float</dt><dd><p>The computed monoisotopic (or charged) mass of the molecular formula.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If the number of negative charges exceeds the number of hydrogens,
+making deprotonation impossible.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">monomass</span><span class="p">({</span><span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">34.005479304</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">monomass</span><span class="p">({</span><span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Oeighteen&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="n">isotopes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Oeighteen&quot;</span><span class="p">:</span> <span class="mf">17.9991604</span><span class="p">})</span>
+<span class="go">36.009725084</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">monomass</span><span class="p">({</span><span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span> <span class="n">charge</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">181.0710059126534</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.parse_spectrum_data">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">parse_spectrum_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#metabolomics_tools.core.parse_spectrum_data" title="Link to this definition">¶</a></dt>
+<dd><p>Parse a Mass Spectrum (MSP) file into a pandas DataFrame.</p>
+<p>This function reads an MSP file (commonly used for spectral libraries),
+parses metadata and peak lists, and returns a structured DataFrame.
+Each block in the MSP file corresponds to one compound or spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>file_path</strong><span class="classifier">str</span></dt><dd><p>Path to the MSP file to be parsed.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>A DataFrame where each row corresponds to a spectrum entry.
+Metadata fields are columns, and the “Num Peaks” column contains
+a list of (m/z, intensity) tuples representing the peaks.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Lines starting with a number are treated as m/z-intensity peaks.</p></li>
+<li><p>Key-value metadata lines are split at the first occurrence of “: “.</p></li>
+<li><p>Peaks are stored in the “Num Peaks” column as a list of tuples.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">parse_spectrum_data</span><span class="p">(</span><span class="s2">&quot;example.msp&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;Name&#39;, &#39;PrecursorMZ&#39;, &#39;Num Peaks&#39;, ...], dtype=&#39;object&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Num Peaks&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[(100.1, 50.0), (101.2, 42.3), ...]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metabolomics_tools.core.read_file">
+<span class="sig-prename descclassname"><span class="pre">metabolomics_tools.core.</span></span><span class="sig-name descname"><span class="pre">read_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metabolomics_tools.core.read_file" title="Link to this definition">¶</a></dt>
+<dd><p>Read the entire contents of a file and return it as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>file_path</strong><span class="classifier">str</span></dt><dd><p>Path to the file to be read.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>The full contents of the file as a single string.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;example.txt&quot;</span><span class="p">)</span>
+<span class="go">&#39;This is the content of example.txt...&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-metabolomics_tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-metabolomics_tools" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">metabolomics_tools</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Amirhossein Sakhteman.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/metabolomics_tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
